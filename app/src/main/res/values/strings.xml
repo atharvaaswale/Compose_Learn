@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Compose Learn</string>
+    <string name="title_activity_opt_verification">OptVerificationActivity</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+</resources>
