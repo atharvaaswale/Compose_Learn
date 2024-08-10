@@ -1,8 +1,12 @@
 package com.unreal.composelearn.viewModels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.unreal.composelearn.IOmodel.WeatherResponse
+import com.unreal.composelearn.retrofit.NetworkResponse
 import com.unreal.composelearn.retrofit.RetrofitInstance
 import com.unreal.composelearn.utils.Constants
 import kotlinx.coroutines.CoroutineScope
@@ -11,27 +15,21 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class WeatherViewModel: ViewModel() {
-    val api = RetrofitInstance.apiService
+    private val api = RetrofitInstance.apiService
+    private val _weatherResult = MutableLiveData<NetworkResponse<WeatherResponse>>()
+    val weatherResultList: LiveData<NetworkResponse<WeatherResponse>> = _weatherResult
     fun getWeatherData(city: String) {
-        Log.i("1212Test", "getWeatherData: $city")
-        /*CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) {
+        _weatherResult.value = NetworkResponse.Loading
+        viewModelScope.launch {
+            try {
                 val response = api.getWeather(Constants.apiKey, city)
                 if (response.isSuccessful) {
-                    val weatherData = response.body()
-                    Log.d("1212Test", "Weather data: ${weatherData!!.current.condition}")
+                    _weatherResult.value = NetworkResponse.Success(response.body()!!)
                 } else {
-                    Log.d("1212Test", response.message())
+                    _weatherResult.value = NetworkResponse.Error("Failed to load data")
                 }
-            }
-        }*/
-        viewModelScope.launch {
-            val response = api.getWeather(Constants.apiKey, city)
-            if (response.isSuccessful) {
-                val weatherData = response.body()
-                Log.d("1212Test", "Weather data: ${weatherData!!.current.condition}")
-            } else {
-                Log.d("1212Test", response.message())
+            } catch (e: Exception) {
+                _weatherResult.value = NetworkResponse.Error("Failed to load data")
             }
         }
     }

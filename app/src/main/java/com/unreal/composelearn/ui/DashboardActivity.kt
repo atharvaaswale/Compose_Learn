@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import com.unreal.composelearn.retrofit.NetworkResponse
 import com.unreal.composelearn.viewModels.WeatherViewModel
 
 class DashboardActivity : ComponentActivity() {
@@ -46,6 +49,7 @@ class DashboardActivity : ComponentActivity() {
 @Composable
 fun MainUI(ctx: ViewModelStoreOwner) {
     val vm = ViewModelProvider(ctx)[WeatherViewModel::class.java]
+    val weatherResult = vm.weatherResultList.observeAsState()
     var searchValue by remember {
         mutableStateOf("")
     }
@@ -78,6 +82,19 @@ fun MainUI(ctx: ViewModelStoreOwner) {
                     tint = Color.Black
                 )
             }
+        }
+
+        when(val result = weatherResult.value) {
+            is NetworkResponse.Error -> {
+                Text(text = result.message)
+            }
+            NetworkResponse.Loading -> {
+                CircularProgressIndicator()
+            }
+            is NetworkResponse.Success -> {
+                Text(text = result.data.toString())
+            }
+            null -> {}
         }
     }
 }

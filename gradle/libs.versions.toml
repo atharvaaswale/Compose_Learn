@@ -11,6 +11,8 @@ composeBom = "2024.04.01"
 navigation = "2.7.7"
 retrofit = "2.11.0"
 converterGson = "2.11.0"
+liveData = "2.8.4"
+runtimeLivedata = "1.6.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +32,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation = {group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation"}
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converterGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
+liveData = { group = "androidx.lifecycle", name = "lifecycle-livedata", version.ref = "liveData" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
