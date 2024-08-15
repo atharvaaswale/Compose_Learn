@@ -48,7 +48,7 @@ fun OTPVerificationScreen(phone: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.UIColor),
+            .background(UIColor),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -64,7 +64,7 @@ fun OTPVerificationScreen(phone: String) {
         Column (
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.UIColor)
+                .background(UIColor)
                 .weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
 

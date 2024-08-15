@@ -71,4 +71,5 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converterGson)
     implementation(libs.liveData)
+    implementation(libs.coil)
 }
